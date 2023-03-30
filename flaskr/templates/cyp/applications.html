@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Applications{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('cyp.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for application in applications %}
+    <article class="application">
+      <header>
+        <div>
+          <h1>Application: #{{ application['id'] }}</h1>
+          <ul>
+            <li>First name: {{ application['first_name'] }}</li>
+            <li>Last name: {{ application['last_name'] }}</li>
+          </ul>
+        </div>
+        {% if g.user['id'] == application['id'] %}
+          <a class="action" href="{{ url_for('cyp.update', id=application['id']) }}">Edit</a>
+        {% endif %}
+      </header>
+      <p class="body">TEMPORARILY EMPTY</p>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
